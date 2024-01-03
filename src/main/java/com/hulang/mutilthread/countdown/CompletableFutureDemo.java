@@ -15,8 +15,14 @@ import java.util.concurrent.Executors;
 public class CompletableFutureDemo {
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
+        completableFutureTest();
+        //如果任务比较多的情况下就可以使用数组列表来存储创建的任务
+
+    }
+
+    private static void completableFutureTest() throws InterruptedException, ExecutionException {
         // 手动创建线程池，效果会更好哦。
-        ExecutorService executorService = Executors.newFixedThreadPool(10);
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
         // 启动三个异步任务
         CompletableFuture<Void> future1 = CompletableFuture.runAsync(() -> {
             // 执行任务1
@@ -32,9 +38,8 @@ public class CompletableFutureDemo {
         }, executorService);
 
         CompletableFuture.allOf(future1, future2, future3).get();
-
         System.out.println("所有任务执行完成");
-        //如果任务比较多的情况下就可以使用数组列表来存储创建的任务
-
     }
+
+
 }
